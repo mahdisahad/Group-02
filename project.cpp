@@ -4,16 +4,19 @@
 class Database
 {
 private:
-    std::vector<std::string> records;
+    std::vector<std::string> data;
 public:
-    void insert(const std::string& record){
-        records.push_back(record);
+    void insert(const std::initializer_list<std::string>& records){
+        for( const auto & record : records){
+            data.push_back(record);
+            std::cout << "inserted: \n";
+        }
     }
     void showAll() const{
         std::cout <<"All record:\n";
         size_t i=0;
-        while (i < records.size()){
-            std::cout << i << ":" << records[i] << "\n";
+        while (i < data.size()){
+            std::cout << i+1 << ":" << data[i] << "\n";
             i++;
         }
     }
@@ -25,18 +28,18 @@ int main(){
     std::string record;
 
 
-    std::cout << "menu:\n";
+    std::cout <<"Menu:\n";
     std::cout <<"1.insert record\n";
     std::cout <<"2.update record\n";
-    std::cout <<"3.find record\n";
-    std::cout <<"4.delet record\n";
+    std::cout <<"3.find   record\n";
+    std::cout <<"4.delet  record\n";
     std::cout <<"5.show all\n";
-    std::cout <<"6.exit\n";
+    std::cout <<"6.Exit\n";
 
     while (number!=6){
-        std::cout <<"enter number:";
+        std::cout <<"Enter number:";
         std::cin >> number;
-       if ( number> 6  || number<1){
+       if ( number> 5  || number<1){
            std::cout << "Error\n";
             return 0;
         }
@@ -49,7 +52,10 @@ int main(){
         else if( number == 5){
             db.showAll();
         }
-    }    
+        else if( number == 6)
+            std::cout << "Exiting.....\n";
+    }
+    
     return 0;
 
 }
