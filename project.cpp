@@ -1,22 +1,23 @@
 #include <iostream>
 #include <vector>
 #include <string>
+using namespace std;
 class Database
 {
 private:
-    std::vector<std::string> data;
+    vector<string> data;
 public:
-    void insert(const std::initializer_list<std::string>& records){
+    void insert(const initializer_list<string>& records){
         for( const auto & record : records){
             data.push_back(record);
-            std::cout << "inserted: \n";
+            cout << "inserted: \n";
         }
     }
     void showAll() const{
-        std::cout <<"All record:\n";
+        cout <<"All record:\n";
         size_t i=0;
         while (i < data.size()){
-            std::cout << i+1 << ":" << data[i] << "\n";
+            cout << i+1 << ":" << data[i] << "\n";
             i++;
         }
     }
