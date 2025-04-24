@@ -86,8 +86,22 @@ class DbInfo{
 
      }
     }
-    Schema* getTable(const string tableName){}
-    bool hasTable(const string tableName){}
+    Schema* getTable(const string tableName){
+        for(int i=0;i<tableCount;i++){
+            if(tables[i].getName()==tableName){
+                return &tables[i];
+            }
+        }
+        return nullptr;
+    }
+    bool hasTable(const string tableName){
+        for(int t=0;i<tableCount;i++){
+            if(tables[i].getName()==tableName){
+                return true;
+            }
+        }
+        return false;
+    }
 };
 class MetaData{
     private:
@@ -121,7 +135,34 @@ class MetaData{
     }
 
 };
-class Record{};
+class Record{
+ private:
+    string tableName;
+    bool isDeleted;
+    MetaData* metaData;
+ public:
+    Record(const string tableName,int columnCount): tableName(tableName),isDeleted(false){
+        metaData=new MetaData(columnCount);
+    }
+    ~Recoird(){
+        delete[] metaData;
+    }
+    void setData(){}
+    string getData(){}
+    void markAsDeleted(){
+        isDeleted=true;
+    }
+    bool getIsDeleted()const{
+        return isDeleted;
+    }
+    void printRecord()const{}
+    string getTableName()const{
+        return tableName;
+    }
+    int getColumnCount() const{}
+
+
+};
 
 //اینجا نباید از وکتور استفاده بشه
 class Database
