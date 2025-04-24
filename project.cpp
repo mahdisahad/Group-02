@@ -80,8 +80,47 @@ class DbInfo{
         }
         return false;
      }
+     void printTables(const){
+        for (int i=0;i<tableCount;i++){
+            cout<<tables[i].getName()<<endl;
+
+     }
+    }
+    Schema* getTable(const string tableName){}
+    bool hasTable(const string tableName){}
 };
-class MetaData{};
+class MetaData{
+    private:
+     string* recordData;
+     int columnCount;
+    public:
+     MetaData(int colCount): columnCount(colCount){
+        recordData= new string[columnCount];
+     }
+     ~MetaData(){
+        delete[] recordData;
+     }
+    void setData(int index, const string data){
+        if(index>=0 &&index<columnCount){
+            recrodData[index]= data;
+        }
+    }
+    string getData(int index) const{
+        if(index>=0&&index<columnCount){
+            return recordData[index];
+        }
+        return "";
+    }
+    void printRecord() const{
+        for (int i=0; i<columnCount;i++){
+            cout<<recordData[i]<<" ";
+        }
+    }
+    int getColumnCount() const{
+        return columnCount;
+    }
+
+};
 class Record{};
 class Database
 {
@@ -107,7 +146,7 @@ public:
 int main(){
     Database db;
     int number=1;
-    std::string record;
+    string record;
 
 
     cout <<"Menu:\n";
