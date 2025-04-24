@@ -80,7 +80,7 @@ class DbInfo{
         }
         return false;
      }
-     void printTables(const){
+     void printTables() const{
         for (int i=0;i<tableCount;i++){
             cout<<tables[i].getName()<<endl;
 
@@ -102,7 +102,7 @@ class MetaData{
      }
     void setData(int index, const string data){
         if(index>=0 &&index<columnCount){
-            recrodData[index]= data;
+            recordData[index]= data;
         }
     }
     string getData(int index) const{
@@ -122,12 +122,14 @@ class MetaData{
 
 };
 class Record{};
+
+//اینجا نباید از وکتور استفاده بشه
 class Database
 {
 private:
-    vector<string> data;
+    //vector<string> data;
 public:
-    void insert(const initializer_list<string>& records){
+    /*void insert(const initializer_list<string>& records){
         for( const auto & record : records){
             data.push_back(record);
             cout << "inserted: \n";
@@ -140,7 +142,7 @@ public:
             cout << i+1 << ":" << data[i] << "\n";
             i++;
         }
-    }
+    }*/
     
 };
 int main(){
