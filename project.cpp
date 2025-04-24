@@ -16,7 +16,7 @@ class Column{
         return type;
     }
     void setName(const string colName){
-        name=colname;
+        name=colName;
     }
     void setType(const string colType){
         name=colType;
