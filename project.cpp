@@ -2,7 +2,26 @@
 #include <vector>
 #include <string>
 using namespace std;
-class Column{};
+class Column{
+    private:
+     string name;
+     string type;
+    public:
+    Column():name(""),type(""){}
+    Column(const string colName,const string colType):name(colName), type(colType){}
+    string getName() const{
+        return name;
+    }
+    string getType() const{
+        return type;
+    }
+    void setName(const string colName){
+        name=colname;
+    }
+    void setType(const string colType){
+        name=colType;
+    }
+};
 class Schema{};
 class DbInfo{};
 class MetaData{};
