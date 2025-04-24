@@ -22,7 +22,25 @@ class Column{
         name=colType;
     }
 };
-class Schema{};
+class Schema{
+    private:
+     string tableName;
+     Column columns[15];
+     int columnCount;
+    public:
+     Schema(): tableName(""),columnCount(0){}
+     Schema(const string name):tableName(name), columnCount(0){}
+     string getName() const{
+        return tableName;
+     }
+     void addColumn(const string colName, const string colType){
+        if(columnCount<15){
+            columns[columnCount++]=Column(colName, colType);
+        }else{
+            cout<<"you can't insert any new columns"<<endl;
+        }
+     }
+};
 class DbInfo{};
 class MetaData{};
 class Record{};
