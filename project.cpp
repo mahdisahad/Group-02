@@ -2,6 +2,11 @@
 #include <vector>
 #include <string>
 using namespace std;
+class Column{};
+class Schema{};
+class DbInfo{};
+class MetaData{};
+class Record{};
 class Database
 {
 private:
