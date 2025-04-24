@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 using namespace std;
+const MAX_TABLES=10;
+const MAX_RECORDS=50;
 class Column{
     private:
      string name;
@@ -40,8 +42,45 @@ class Schema{
             cout<<"you can't insert any new columns"<<endl;
         }
      }
+     void printSchema() const{
+        cout<<"table:"<<tableName<<endl;
+        for(int i=0;i<columnCount;i++){
+            cout<<"column"<<(i+1)<<":"<<columns[i].getName()<<" ("<<columns[i].getType()<<")"<<endl;
+         }
+        }
+     int getColumnCount() const{
+        return columnCount;
+     }
+     Column* getColumnCount(int index){
+        return &columns[index];
+     }
 };
-class DbInfo{};
+class DbInfo{
+    private:
+     Schema tables[MAX_TABLES];
+     int tableCount;
+    public:
+     DbInfo():tableCount(0){}
+     bool addTable(const string tableName){
+        if(tableCount<MAX_TABLES){
+            tables[tableCount++]=Schema(tableName);
+        }
+        return false;
+     }
+     bool removeTable(const string tableName) {
+        for(int i=0;i<tableCount;i++){
+            if(tables[i].getName()==tableName){
+                for(int j=i;j<tableCount;j++){
+                    tables[j]=tables[j+1];
+                }
+                tableCount--;
+                return true;
+            }
+
+        }
+        return false;
+     }
+};
 class MetaData{};
 class Record{};
 class Database
