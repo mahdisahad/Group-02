@@ -187,10 +187,27 @@ public:
         if(recordCount < MAX_RECORDS ){
             int columnCount =schema.getColumnCount();
             Record*newRecord = new Record(tableName, columnCount);
+            cout <<"Columns available in"<<tableName<<":/n";
 
             for(int i=0; i< columnCount; i++){
+                cout<<(i+1)<<"."<< schema.getColumn(i)->getName()<<"/n";
                 newRecord->setData(i, data[i]);
             }
+            int colChoice;
+            cout<< "Enter the number of the column to insert data into:";
+            cin>> colChoice;
+            cin.ignore();
+
+            if(colChoice< 1 || colChoice>columnCount){
+                cout<<"Invalid column selection./n";
+                delete newRecord;
+                return false;
+            }
+
+            string colData;
+            cout<<"Enter data for column"<<schema.getColumnCount(colChoice-1)->getName()<<":";
+            getline(cin, colData);
+            newRecord->setData(colChoice-1, colData);
 
             records[recordCount++] = newRecord;
             return true;
