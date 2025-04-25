@@ -2,8 +2,8 @@
 #include <vector>
 #include <string>
 using namespace std;
-const MAX_TABLES=10;
-const MAX_RECORDS=50;
+const int MAX_TABLES=10;
+const int MAX_RECORDS=50;
 class Column{
     private:
      string name;
@@ -148,10 +148,10 @@ class Record{
         delete[] metaData;
     }
     void setData(int index,const string data){
-        metaData->setData(index, data)
+        metaData->setData(index, data);
     }
     string getData(int index){
-        return metaData->getData(index)
+        return metaData->getData(index);
     }
     void markAsDeleted(){
         isDeleted=true;
@@ -163,7 +163,9 @@ class Record{
     string getTableName()const{
         return tableName;
     }
-    int getColumnCount() const{}
+    int getColumnCount() const{
+        return metaData->getColumnCount();
+    }
 
 
 };
@@ -182,16 +184,16 @@ public:
             int columnCount =schema.getColumnCount();
             Record*newRecord = new Record(tableName, columnCount);
 
-            for(int i=0, i< columnCount; i++){
+            for(int i=0; i< columnCount; i++){
                 newRecord->setData(i, data[i]);
             }
 
-            record[recordCount++] = newRecord;
+            records[recordCount++] = newRecord;
             return true;
         }
         return false;
     }
-    void findRecords(const string& rableName, const string& colunmName, const string& value){
+    void findRecords(const string& tableName, const string& colunmName, const string& value){
         for(int i=0; i<recordCount;i++){
             if(records[i]->getTableName()== tableName){
                 for(int j=0; j<records[i]->getColumnCount();j++){
@@ -324,13 +326,14 @@ int main(){
             break;
         }
         case 6:{
-            myBD.printAllRecords();
+            myDB.printAllRecords();
             break;
         }
         case 7:{
             cout<<"exiting program"<<endl;
             break;
         }
+    }
     }while (choice!=7);
     
     /*{
@@ -355,5 +358,4 @@ int main(){
     
     return 0;
 
-}
 }
