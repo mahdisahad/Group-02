@@ -53,6 +53,9 @@ class Schema{
      Column* getColumnCount(int index){
         return &columns[index];
      }
+     Column* getColumn(int index){
+        return &columns[index];
+     }
 };
 class DbInfo{
     private:
