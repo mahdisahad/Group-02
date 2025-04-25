@@ -231,19 +231,55 @@ public:
 };
 int main(){
     Database db;
-    Database 
-    string record;
-
-
+    DataBase myDB;
+    int choice;
+    do{
     cout <<"Menu:\n";
-    cout <<"1.insert record\n";
-    cout <<"2.update record\n";
-    cout <<"3.find   record\n";
-    cout <<"4.delet  record\n";
-    cout <<"5.show all\n";
-    cout <<"6.Exit\n";
+    cout <<"1.add table\n";
+    cout <<"2.add column\n";
+    cout <<"3.add record\n";
+    cout <<"4.update record\n";
+    cout <<"5.delete record\n";
+    cout <<"6.show all\n";
+    cout<<"7.exit\n";
+    cout<<"enter a number: ";
+    cin>>choice;
 
-    while (number!=6){
+    switch(choice){
+        case1:{
+            string tableName;
+            cout<<"enter table name: ";
+            cin>>tableName;
+            db.addTable(tableName);
+            cout<<tableName<<" added";
+            break;
+        }
+        case2:{
+            string tableName, colName, colType;
+            cout<<"enter table name to add column: ";
+            cin>>tableName;
+            cout<<"enter column name: ";
+            cin>>colName;
+            cout <<"enter column's data type(string,number,ect..): ";
+            cin>>colType;
+            
+            if(db.hasTable(tableName)){
+                Schema* schema=db.getTable(tableName);
+                schema->addColumn(colName,colType);
+            } else{
+                cout<<"table not found"<<endl;
+                break;
+            }
+         }
+        case3:{}
+        case4:{}
+        case5:{}
+        case6:{}
+        case7:{}
+    }
+
+    }
+    /*while (number!=7){
         cout <<"Enter number:";
         cin >> number;
        if ( number> 5  || number<1){
@@ -261,7 +297,7 @@ int main(){
         }
         else if( number == 6)
             cout << "Exiting.....\n";
-    }
+    }*/
     
     return 0;
 
