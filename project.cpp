@@ -188,7 +188,7 @@ public:
 };
 int main(){
     Database db;
-    int number=1;
+    Database 
     string record;
 
 
