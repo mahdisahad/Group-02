@@ -246,7 +246,7 @@ int main(){
     cin>>choice;
 
     switch(choice){
-        case1:{
+        case 1:{
             string tableName;
             cout<<"enter table name: ";
             cin>>tableName;
@@ -254,7 +254,7 @@ int main(){
             cout<<tableName<<" added";
             break;
         }
-        case2:{
+        case 2:{
             string tableName, colName, colType;
             cout<<"enter table name to add column: ";
             cin>>tableName;
@@ -266,20 +266,70 @@ int main(){
             if(db.hasTable(tableName)){
                 Schema* schema=db.getTable(tableName);
                 schema->addColumn(colName,colType);
+                cout<<"column added"<<endl;
             } else{
                 cout<<"table not found"<<endl;
                 break;
             }
          }
-        case3:{}
-        case4:{}
-        case5:{}
-        case6:{}
-        case7:{}
-    }
+        case3:{
+            string tableName;
+            cout<<"enter table name to add record: ";
+            cin>>tableName;
+            if(db.hasTable(tableName)){
+                Schema* schema=db.getTable(tableName);
+                int columnCount= schema->getColumnCount();
+                string data[columnCount];
+                cout<<"enter record data:";
+                for(int i=0;i<columnCount; i++){
+                    cout<<"column "<<(i+1)<<":";
+                    cin>>data[i];
+                }
+                myDB.insertRecord(tableName, *schema, data);
+            } else{
+                cout<<"table not found"<<endl;
+                break;
+            }
 
-    }
-    /*while (number!=7){
+        }
+        case 4:{
+            string tableName, columnName, oldValue, newValue;
+            cout<<"enter table name to update record: ";
+            cin>>tableName;
+            cout<<"enter column name: ";
+            cin>>columnName;
+            cout<< "enter old value: ";
+            cin>>oldValue;
+            cout<< "enter new value: ";
+            cin>> newValue;
+            myDB.updateRecord(tableName, columnName,oldValue,newValue);
+            cout<<"value updated."<<endl;
+            break;
+
+        }
+        case 5:{
+            string tableName, columnName, value;
+            cout<<"enter table name to delete record: ";
+            cin>>tableName;
+            cout<<"enter column name: ";
+            cin>>columnName;
+            cout<< "enter your value: ";
+            cin>>value;
+            myDB.deleteRecord(tableName,columnName,value);
+            cout<<"value deleted"<<endl;
+            break;
+        }
+        case 6:{
+            myBD.printAllRecords();
+            break;
+        }
+        case 7:{
+            cout<<"exiting program"<<endl;
+            break;
+        }
+    }while (choice!=7);
+    
+    /*{
         cout <<"Enter number:";
         cin >> number;
        if ( number> 5  || number<1){
