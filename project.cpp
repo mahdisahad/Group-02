@@ -165,24 +165,24 @@ class Record{
 };
 
 
-class Database
+class DataBase
 {
 private:
-    Record*record[MAX_RECORDS];
-    int recordCont;
+    Record* records[MAX_RECORDS];
+    int recordCount;
 public:
-    Database() :recordCount(0){}
+    DataBase() :recordCount(0){}
 
     bool insertRecord(const string& tableName, const Schema& schema, const string data[]){
-        if(recordCont < MAX_RECORDS ){
-            int clumnCount =schema.getColumnCount();
-            Record*newRecord = new Record)tableName, columnCount);
+        if(recordCount < MAX_RECORDS ){
+            int columnCount =schema.getColumnCount();
+            Record*newRecord = new Record(tableName, columnCount);
 
             for(int i=0, i< columnCount; i++){
                 newRecord->setData(i, data[i]);
             }
 
-            record[recordCont++] = newRecord;
+            record[recordCount++] = newRecord;
             return true;
         }
         return false;
@@ -192,7 +192,7 @@ public:
             if(records[i]->getTableName()== tableName){
                 for(int j=0; j<records[i]->getColumnCount();j++){
                     if(records[i]->getData(j)== value){
-                        recosi[i]->printRecord();
+                        records[i]->printRecord();
                     }
                 }
             }
@@ -200,9 +200,9 @@ public:
     }
 
     void updateRecord(const string& tableName, const string& columnName, const string& oldValue, const string& newValue){
-        for(int i=0;i<recordCont; i++){
-            if(records[i]->gerTableName()== tableName){
-                for(int j=0; j<records[i]-> gerClumnCount(); j++){
+        for(int i=0;i<recordCount; i++){
+            if(records[i]->getTableName()== tableName){
+                for(int j=0; j<records[i]-> getColumnCount(); j++){
                     if(records[i]->getData(j) == oldValue){
                         records[i]->setData(j, newValue);
                     }
@@ -230,7 +230,7 @@ public:
     }
 };
 int main(){
-    Database db;
+    DbInfo db;
     DataBase myDB;
     int choice;
     do{
@@ -351,4 +351,5 @@ int main(){
     
     return 0;
 
+}
 }
