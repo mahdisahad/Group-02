@@ -50,7 +50,7 @@ class Schema{
      int getColumnCount() const{
         return columnCount;
      }
-     Column* getColumnCount(int index){
+     Column* getColumn(int index){
         return &columns[index];
      }
      Column* getColumn(int index){
@@ -188,38 +188,48 @@ private:
 public:
     DataBase() :recordCount(0){}
 
-    bool insertRecord(const string& tableName, Schema& schema){
-        if(recordCount < MAX_RECORDS ){
-            int columnCount =schema.getColumnCount();
-            Record*newRecord = new Record(tableName, columnCount);
-            cout <<"Columns available in'"<<tableName<<"':\n";
-
-            for(int i=0; i< columnCount; i++){
-                cout<<(i+1)<<"."<< schema.getColumn(i)->getName()<<"\n";
-                newRecord->setData(i, data[i]);
+    bool insertRecord(const string& tableName, Schema& schema) {
+        if (recordCount < MAX_RECORDS) {
+            int columnCount = schema.getColumnCount();
+            Record* newRecord = new Record(tableName, columnCount);
+    
+            // Show columns to the user and ask which column to insert data into
+            cout << "Columns available in '" << tableName << "':\n";
+            for (int i = 0; i < columnCount; i++) {
+                cout << (i + 1) << ". " << schema.getColumn(i)->getName() << "\n";
             }
+    
+            // Ask the user to choose a column number
             int colChoice;
-            cout<< "Enter the number of the column to insert data into:";
-            cin>> colChoice;
-            cin.ignore();
-
-            if(colChoice< 1 || colChoice>columnCount){
-                cout<<"Invalid column selection.\n";
+            cout << "Enter the number of the column to insert data into: ";
+            cin >> colChoice;
+            cin.ignore(); // Ignore newline left by previous input
+    
+            if (colChoice < 1 || colChoice > columnCount) {
+                cout << "Invalid column selection.\n";
                 delete newRecord;
                 return false;
             }
-
+    
+            // Now, prompt the user to input the data for the selected column
             string colData;
-            cout<<"Enter data for column'"<< schema.getColumnCount(colChoice-1)->getName()<<"':";
+            cout << "Enter data for column '" << schema.getColumn(colChoice - 1)->getName() << "': ";
             getline(cin, colData);
-            newRecord->setData(colChoice-1, colData);
-
+    
+            // Insert data into the chosen column
+            newRecord->setData(colChoice - 1, colData);
+    
+            // Store the new record
             records[recordCount++] = newRecord;
+            cout << "Record inserted into column " << colChoice << ".\n";
             return true;
         }
+    
+        cout << "Unable to insert record: Database is full.\n";
         return false;
     }
-    void findRecords(const string& tableName, const string& colunmName, const string& value){
+    void findRecords(const string& tableName, const string& columnName, const string& value)
+    {
         for(int i=0; i<recordCount;i++){
             if(records[i]->getTableName()== tableName){
                 for(int j=0; j<records[i]->getColumnCount();j++){
@@ -319,7 +329,7 @@ int main(){
                     cout<<"column "<<(i+1)<<":";
                     cin>>data[i];
                 }
-                myDB.insertRecord(tableName, *schema, data);
+                myDB.insertRecord(tableName, *schema);
             } else{
                 cout<<"table not found"<<endl;
                 //break;
@@ -361,6 +371,7 @@ int main(){
         case 7:{
             string tableName, columnName, value;
             cout << "Enter table name to search in: ";
+            cin.ignore();
             getline(cin, tableName);
             cout << "Rnter value to search for: ";
             getline(cin, value);
@@ -371,7 +382,7 @@ int main(){
             cout << "Exiting program...\n";
             break;
         default:
-                cout << "Invalid choice!\n";
+            cout << "Invalid choice!\n";
         }
     }
     }while (choice!=8);
