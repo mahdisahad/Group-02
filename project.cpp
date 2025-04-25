@@ -95,7 +95,7 @@ class DbInfo{
         return nullptr;
     }
     bool hasTable(const string tableName){
-        for(int t=0;i<tableCount;i++){
+        for(int i=0;i<tableCount;i++){
             if(tables[i].getName()==tableName){
                 return true;
             }
@@ -147,8 +147,12 @@ class Record{
     ~Record(){
         delete[] metaData;
     }
-    void setData(){}
-    string getData(){}
+    void setData(int index,const string data){
+        metaData->setData(index, data)
+    }
+    string getData(int index){
+        return metaData->getData(index)
+    }
     void markAsDeleted(){
         isDeleted=true;
     }
