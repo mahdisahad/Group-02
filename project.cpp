@@ -183,14 +183,14 @@ private:
 public:
     DataBase() :recordCount(0){}
 
-    bool insertRecord(const string& tableName, const Schema& schema, const string data[]){
+    bool insertRecord(const string& tableName,Schema& schema){
         if(recordCount < MAX_RECORDS ){
             int columnCount =schema.getColumnCount();
             Record*newRecord = new Record(tableName, columnCount);
-            cout <<"Columns available in"<<tableName<<":/n";
+            cout <<"Columns available in"<<tableName<<":\n";
 
             for(int i=0; i< columnCount; i++){
-                cout<<(i+1)<<"."<< schema.getColumn(i)->getName()<<"/n";
+                cout<<(i+1)<<"."<< schema.getColumn(i)->getName()<<"\n";
                 newRecord->setData(i, data[i]);
             }
             int colChoice;
@@ -199,7 +199,7 @@ public:
             cin.ignore();
 
             if(colChoice< 1 || colChoice>columnCount){
-                cout<<"Invalid column selection./n";
+                cout<<"Invalid column selection.\n";
                 delete newRecord;
                 return false;
             }
@@ -267,8 +267,9 @@ int main(){
     cout <<"3.add record\n";
     cout <<"4.update record\n";
     cout <<"5.delete record\n";
-    cout <<"6.show all\n";
-    cout<<"7.exit\n";
+    cout <<"6.show all record\n";
+    cout <<"7.Find Record\n";
+    cout <<"8.exit\n";
     cout<<"enter a number: ";
     cin>>choice;
 
@@ -353,31 +354,23 @@ int main(){
             break;
         }
         case 7:{
-            cout<<"exiting program"<<endl;
+            string tableName, columnName, value;
+            cout << "Enter table name to search in: ";
+            getline(cin, tableName);
+            cout << "Rnter value to search for: ";
+            getline(cin, value);
+            myDB.findRecords(tableName, columnName, value);
             break;
         }
+        case 8:{
+            cout << "Exiting program...\n"
+            break;
+            default:
+                cout << "Invalid choice!\n";
+        }
     }
-    }while (choice!=7);
+    }while (choice!=8);
     
-    /*{
-        cout <<"Enter number:";
-        cin >> number;
-       if ( number> 5  || number<1){
-           cout << "Error\n";
-            return 0;
-        }
-        if ( number == 1){
-            cout << "Enter record:\n";
-            cin.ignore();
-            getline (cin, record);
-            db.insert(record);
-        }
-        else if( number == 5){
-            db.showAll();
-        }
-        else if( number == 6)
-            cout << "Exiting.....\n";
-    }*/
     
     return 0;
 
