@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <string>
 using namespace std;
 const int MAX_TABLES=10;
@@ -159,7 +158,12 @@ class Record{
     bool getIsDeleted()const{
         return isDeleted;
     }
-    void printRecord()const{}
+    void printRecord()const{
+        if(!isDeleted){
+            cout<<"Table: "<<tableName;
+            metaData->printRecord();
+        }
+    }
     string getTableName()const{
         return tableName;
     }
@@ -257,7 +261,7 @@ int main(){
             cout<<"enter table name: ";
             cin>>tableName;
             db.addTable(tableName);
-            cout<<tableName<<" added";
+            cout<<tableName<<" added"<<endl;
             break;
         }
         case 2:{
@@ -277,8 +281,9 @@ int main(){
                 cout<<"table not found"<<endl;
                 break;
             }
+            break;
          }
-        case3:{
+        case 3:{
             string tableName;
             cout<<"enter table name to add record: ";
             cin>>tableName;
@@ -296,6 +301,7 @@ int main(){
                 cout<<"table not found"<<endl;
                 break;
             }
+            break;
 
         }
         case 4:{
