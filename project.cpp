@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 const int MAX_TABLES=10;
 const int MAX_RECORDS=50;
@@ -53,9 +54,9 @@ class Schema{
      Column* getColumn(int index){
         return &columns[index];
      }
-     Column* getColumn(int index){
-        return &columns[index];
-     }
+    // Column* getColumn(int index){
+    //    return &columns[index];
+    // }
 };
 class DbInfo{
     private:
@@ -329,8 +330,6 @@ int main(){
             }
             break;
         }
-
-        }
         case 4:{
             string tableName, columnName, oldValue, newValue;
             cout<<"enter table name to update record: ";
@@ -367,7 +366,9 @@ int main(){
             cout << "Enter table name to search in: ";
             cin.ignore();
             getline(cin, tableName);
-            cout << "Rnter value to search for: ";
+            cout << "Enter column name: ";
+            getline(cin, columnName);
+            cout << "Enter value to search for: ";
             getline(cin, value);
             myDB.findRecords(tableName, columnName, value);
             break;
