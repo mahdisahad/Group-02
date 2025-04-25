@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 const int MAX_TABLES=10;
 const int MAX_RECORDS=50;
@@ -293,7 +292,7 @@ int main(){
         case 1:{
             string tableName;
             cout<<"enter table name: ";
-            cin>>tableName;
+            getline(cin,tableName);
             db.addTable(tableName);
             cout<<tableName<<" added"<<endl;
             break;
@@ -301,11 +300,11 @@ int main(){
         case 2:{
             string tableName, colName, colType;
             cout<<"enter table name to add column: ";
-            cin>>tableName;
+            getline(cin,tableName);
             cout<<"enter column name: ";
-            cin>>colName;
+            getline(cin,colName);
             cout <<"enter column's data type(string,number,ect..): ";
-            cin>>colType;
+            getline(cin,colType);
             
             if(db.hasTable(tableName)){
                 Schema* schema=db.getTable(tableName);
@@ -320,7 +319,7 @@ int main(){
          case 3:{
             string tableName;
             cout << "Enter table name to add record: ";
-            cin >> tableName;
+            getline(cin,tableName);
         
             if (db.hasTable(tableName)){
                 Schema* schema = db.getTable(tableName);
@@ -333,13 +332,13 @@ int main(){
         case 4:{
             string tableName, columnName, oldValue, newValue;
             cout<<"enter table name to update record: ";
-            cin>>tableName;
+            getline(cin,tableName);
             cout<<"enter column name: ";
-            cin>>columnName;
+            getline(cin,columnName);
             cout<< "enter old value: ";
-            cin>>oldValue;
+            getline(cin,oldValue);
             cout<< "enter new value: ";
-            cin>> newValue;
+            getline(cin,newValue);
             myDB.updateRecord(tableName, columnName,oldValue,newValue);
             cout<<"value updated."<<endl;
             break;
@@ -348,11 +347,11 @@ int main(){
         case 5:{
             string tableName, columnName, value;
             cout<<"enter table name to delete record: ";
-            cin>>tableName;
+            getline(cin,tableName);
             cout<<"enter column name: ";
-            cin>>columnName;
+            getline(cin, columnName);
             cout<< "enter your value: ";
-            cin>>value;
+            getline(cin,value);
             myDB.deleteRecord(tableName,columnName,value);
             cout<<"value deleted"<<endl;
             break;
