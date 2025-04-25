@@ -316,25 +316,19 @@ int main(){
             }
             break;
          }
-        case 3:{
+         case 3:{
             string tableName;
-            cout<<"enter table name to add record: ";
-            cin>>tableName;
-            if(db.hasTable(tableName)){
-                Schema* schema=db.getTable(tableName);
-                int columnCount= schema->getColumnCount();
-                string data[columnCount];
-                cout<<"enter record data:";
-                for(int i=0;i<columnCount; i++){
-                    cout<<"column "<<(i+1)<<":";
-                    cin>>data[i];
-                }
-                myDB.insertRecord(tableName, *schema);
-            } else{
-                cout<<"table not found"<<endl;
-                //break;
+            cout << "Enter table name to add record: ";
+            cin >> tableName;
+        
+            if (db.hasTable(tableName)){
+                Schema* schema = db.getTable(tableName);
+                myDB.insertRecord(tableName, *schema);} 
+             else{
+                cout << "Table not found\n";
             }
             break;
+        }
 
         }
         case 4:{
