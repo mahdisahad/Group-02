@@ -144,7 +144,7 @@ class Record{
     Record(const string tableName,int columnCount): tableName(tableName),isDeleted(false){
         metaData=new MetaData(columnCount);
     }
-    ~Recoird(){
+    ~Record(){
         delete[] metaData;
     }
     void setData(){}
@@ -164,27 +164,70 @@ class Record{
 
 };
 
-//اینجا نباید از وکتور استفاده بشه
+
 class Database
 {
 private:
-    //vector<string> data;
+    Record*record[MAX_RECORDS];
+    int recordCont;
 public:
-    /*void insert(const initializer_list<string>& records){
-        for( const auto & record : records){
-            data.push_back(record);
-            cout << "inserted: \n";
+    Database() :recordCount(0){}
+
+    bool insertRecord(const string& tableName, const Schema& schema, const string data[]){
+        if(recordCont < MAX_RECORDS ){
+            int clumnCount =schema.getColumnCount();
+            Record*newRecord = new Record)tableName, columnCount);
+
+            for(int i=0, i< columnCount; i++){
+                newRecord->setData(i, data[i]);
+            }
+
+            record[recordCont++] = newRecord;
+            return true;
+        }
+        return false;
+    }
+    void findRecords(const string& rableName, const string& colunmName, const string& value){
+        for(int i=0; i<recordCount;i++){
+            if(records[i]->getTableName()== tableName){
+                for(int j=0; j<records[i]->getColumnCount();j++){
+                    if(records[i]->getData(j)== value){
+                        recosi[i]->printRecord();
+                    }
+                }
+            }
         }
     }
-    void showAll() const{
-        cout <<"All record:\n";
-        size_t i=0;
-        while (i < data.size()){
-            cout << i+1 << ":" << data[i] << "\n";
-            i++;
+
+    void updateRecord(const string& tableName, const string& columnName, const string& oldValue, const string& newValue){
+        for(int i=0;i<recordCont; i++){
+            if(records[i]->gerTableName()== tableName){
+                for(int j=0; j<records[i]-> gerClumnCount(); j++){
+                    if(records[i]->getData(j) == oldValue){
+                        records[i]->setData(j, newValue);
+                    }
+                }
+            }
         }
-    }*/
-    
+    }
+
+    void deleteRecord(const string& tableName, const string& columnName, const string& value) {
+        for (int i = 0; i < recordCount; ++i) {
+            if (records[i]->getTableName() == tableName) {
+                for (int j = 0; j < records[i]->getColumnCount(); ++j) {
+                    if (records[i]->getData(j) == value) {
+                        records[i]->markAsDeleted();
+                    }
+                }
+            }
+        }
+    }
+
+    void printAllRecords() const {
+        for (int i = 0; i < recordCount; ++i) {
+            records[i]->printRecord();
+        }
+    }
 };
 int main(){
     Database db;
