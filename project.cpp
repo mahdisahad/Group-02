@@ -9,18 +9,18 @@ class Column{
      string type;
     public:
     Column():name(""),type(""){}
-    Column(const string colName,const string colType):name(colName), type(colType){}
+    Column(const string& colName,const string& colType):name(colName), type(colType){}
     string getName() const{
         return name;
     }
     string getType() const{
         return type;
     }
-    void setName(const string colName){
+    void setName(const string& colName){
         name=colName;
     }
-    void setType(const string colType){
-        name=colType;
+    void setType(const string& colType){
+        type=colType;
     }
 };
 class Schema{
@@ -30,11 +30,11 @@ class Schema{
      int columnCount;
     public:
      Schema(): tableName(""),columnCount(0){}
-     Schema(const string name):tableName(name), columnCount(0){}
+     Schema(const string& name):tableName(name), columnCount(0){}
      string getName() const{
         return tableName;
      }
-     void addColumn(const string colName, const string colType){
+     void addColumn(const string& colName, const string& colType){
         if(columnCount<15){
             columns[columnCount++]=Column(colName, colType);
         }else{
@@ -60,16 +60,18 @@ class DbInfo{
      int tableCount;
     public:
      DbInfo():tableCount(0){}
-     bool addTable(const string tableName){
+     bool addTable(const string& tableName){
         if(tableCount<MAX_TABLES){
             tables[tableCount++]=Schema(tableName);
+            return true; 
         }
+        
         return false;
      }
      bool removeTable(const string tableName) {
         for(int i=0;i<tableCount;i++){
             if(tables[i].getName()==tableName){
-                for(int j=i;j<tableCount;j++){
+                for(int j=i;j<tableCount-1;j++){
                     tables[j]=tables[j+1];
                 }
                 tableCount--;
@@ -85,7 +87,7 @@ class DbInfo{
 
      }
     }
-    Schema* getTable(const string tableName){
+    Schema* getTable(const string& tableName){
         for(int i=0;i<tableCount;i++){
             if(tables[i].getName()==tableName){
                 return &tables[i];
@@ -93,7 +95,7 @@ class DbInfo{
         }
         return nullptr;
     }
-    bool hasTable(const string tableName){
+    bool hasTable(const string& tableName){
         for(int i=0;i<tableCount;i++){
             if(tables[i].getName()==tableName){
                 return true;
@@ -113,13 +115,13 @@ class MetaData{
      ~MetaData(){
         delete[] recordData;
      }
-    void setData(int index, const string data){
-        if(index>=0 &&index<columnCount){
+    void setData(int index, const string& data){
+        if(index>=0 && index<columnCount){
             recordData[index]= data;
         }
     }
     string getData(int index) const{
-        if(index>=0&&index<columnCount){
+        if(index>=0 &&index<columnCount){
             return recordData[index];
         }
         return "";
@@ -140,13 +142,13 @@ class Record{
     bool isDeleted;
     MetaData* metaData;
  public:
-    Record(const string tableName,int columnCount): tableName(tableName),isDeleted(false){
+    Record(const string& tableName,int columnCount): tableName(tableName),isDeleted(false){
         metaData=new MetaData(columnCount);
     }
     ~Record(){
-        delete[] metaData;
+        delete metaData;
     }
-    void setData(int index,const string data){
+    void setData(int index,const string& data){
         metaData->setData(index, data);
     }
     string getData(int index){
@@ -183,11 +185,11 @@ private:
 public:
     DataBase() :recordCount(0){}
 
-    bool insertRecord(const string& tableName,Schema& schema){
+    bool insertRecord(const string& tableName, Schema& schema){
         if(recordCount < MAX_RECORDS ){
             int columnCount =schema.getColumnCount();
             Record*newRecord = new Record(tableName, columnCount);
-            cout <<"Columns available in"<<tableName<<":\n";
+            cout <<"Columns available in'"<<tableName<<"':\n";
 
             for(int i=0; i< columnCount; i++){
                 cout<<(i+1)<<"."<< schema.getColumn(i)->getName()<<"\n";
@@ -205,7 +207,7 @@ public:
             }
 
             string colData;
-            cout<<"Enter data for column"<<schema.getColumnCount(colChoice-1)->getName()<<":";
+            cout<<"Enter data for column'"<< schema.getColumnCount(colChoice-1)->getName()<<"':";
             getline(cin, colData);
             newRecord->setData(colChoice-1, colData);
 
@@ -261,7 +263,7 @@ int main(){
     DataBase myDB;
     int choice;
     do{
-    cout <<"Menu:\n";
+    cout <<"\nMenu:\n";
     cout <<"1.add table\n";
     cout <<"2.add column\n";
     cout <<"3.add record\n";
@@ -297,7 +299,7 @@ int main(){
                 cout<<"column added"<<endl;
             } else{
                 cout<<"table not found"<<endl;
-                break;
+                //break;
             }
             break;
          }
@@ -317,7 +319,7 @@ int main(){
                 myDB.insertRecord(tableName, *schema, data);
             } else{
                 cout<<"table not found"<<endl;
-                break;
+                //break;
             }
             break;
 
@@ -363,9 +365,9 @@ int main(){
             break;
         }
         case 8:{
-            cout << "Exiting program...\n"
+            cout << "Exiting program...\n";
             break;
-            default:
+        default:
                 cout << "Invalid choice!\n";
         }
     }
